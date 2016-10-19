@@ -3,7 +3,7 @@ import cv2
 import pytesseract
 import sys
 import numpy as np
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 
 def display(blurred, frame, gray, threshold, cropped=False):
@@ -26,7 +26,7 @@ def display(blurred, frame, gray, threshold, cropped=False):
 def adaptive_threshold(frame, cropped=False):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (3, 3), 3)
-    threshold = cv2.adaptiveThreshold(blurred, 200, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 15)
+    threshold = cv2.adaptiveThreshold(gray, 200, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 15)
 
     display(blurred, frame, gray, threshold, cropped)
     return threshold
@@ -35,7 +35,7 @@ def adaptive_threshold(frame, cropped=False):
 def simple_threshold(frame, cropped=False):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (3, 3), 3)
-    flag, threshold = cv2.threshold(blurred, 50, 255, cv2.THRESH_OTSU)
+    flag, threshold = cv2.threshold(gray, 180, 255, cv2.THRESH_OTSU)
 
     display(blurred, frame, gray, threshold, cropped)
     return threshold
@@ -137,6 +137,7 @@ def start():
                 break
         cap.release()
         cv2.destroyAllWindows()
+
 
 if __name__ == '__main__':
     start()
