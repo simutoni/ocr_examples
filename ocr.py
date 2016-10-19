@@ -14,7 +14,7 @@ def start():
     filename = filedialog.askopenfilename()
     img = cv2.imread(filename)
     img = ImageProcessing.gray(img)
-    img = process_image(img)
+    img = ImageProcessing.get_text_crop(img)
     img = numpy.asarray(img)
 
     img = ImageProcessing.blur(img)
